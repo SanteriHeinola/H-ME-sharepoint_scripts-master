@@ -1,0 +1,23 @@
+.theme{
+	/*"themeLighterAlt */  background: #f3faf2;
+	/*"themeLighter */  background: #d1ebcd;
+	/*"themeLight */  background: #addaa6;
+	/*"themeTertiary */  background: #6ab65e;
+	/*"themeSecondary */  background: #39932c;
+	/*"themeDarkAlt */  background: #257718; 
+	/*"themeDark */  background: #1f6514; 
+	/*"themeDarker */  background: #174a0f; 
+	/*"neutralLighterAlt */  background: #f8f8f8; 
+	/*"neutralLighter */  background: #f4f4f4; 
+	/*"neutralLight */  background: #eaeaea; 
+	/*"neutralQuaternaryAlt */  background: #dadada; 
+	/*"neutralQuaternary */  background: #d0d0d0; 
+	/*"neutralTertiaryAlt */  background: #c8c8c8; 
+	/*"neutralTertiary */  background: #c2c2c2;
+	/*"neutralSecondary */  background: #858585; 
+	/*"neutralPrimaryAlt */  background: #4b4b4b;
+	/*"neutralPrimary */  background: #333333;
+	/*"neutralDark */  background: #272727;
+	/*"black */  background: #1d1d1d;
+	/*"white */  background: #ffffff;
+}

@@ -1,0 +1,102 @@
+<script type="application/ld+json">{
+    "@type":"MessageCard",
+    "@context":"http://schema.org/extensions",
+    "summary":"This is the summary property",
+    "themeColor":"0075FF",
+    "sections":[
+       {
+          "startGroup":true,
+          "title":"**Hankeen valmistumisen hyväksyntä**",
+          "facts":[
+             {
+                "name":"Arvioitu valmistumispäivä on **tänään**:",
+                "value":"@{triggerBody()?['Arvioitu_x0020_Valmistumisp_x00e']}"
+             },
+             {
+                "name":"Yritys:",
+                "value":"@{triggerBody()?['Title']}"
+             },
+             {
+                "name":"Yritys:",
+                 "value": "@{triggerBody()?['Hankkeen_x0020_nimi']}"
+             },
+             {
+                "name":"Hankkeen kontakti:",
+                "value":"@{triggerBody()?['Hankkeen_x0020_kontakti']}"
+             },
+             {
+                "name":"Budjetti:",
+                "value":"@{triggerBody()?['Budjetti']}"
+             },
+             {
+                "name":"Lisätiedot:",
+                "value":"@{triggerBody()?['Lis_x00e4_tiedot']}"
+             },
+             {
+                "name":"Huomio!:",
+                "value":"Hyväksy hankkeen valmistuminen painamalla **Approve** tai anna uusi **päivämäärä** syöttöön. Voit myös listä lisätietoja tarvittessa."
+             },
+             {
+                "name":"Linkki:",
+                "value":"[Paina täältä katsoaksesi hanketta](@{triggerBody()?['{Link}']})"
+             },
+             {
+               "name":"Esimerkki päivämäärän muodosta:",
+               "value":"12.12.2012 13.00"
+            }
+          ]
+       },
+       {
+          "potentialAction":[
+             {
+                "@type":"ActionCard",
+                "name":"Approve",
+                "inputs":[
+                   {
+                      "@type":"TextInput",
+                      "id":"date",
+                      "isMultiline":false,
+                      "isRequired":false,
+                      "title":"Kirjoita uusi päivämäärä (esimerkki: 12.12.2012 13.00)"
+                   },
+                   {
+                    "@type":"TextInput",
+                    "id":"feedback",
+                    "isMultiline":true,
+                    "isRequired":false,
+                    "title":"Lisätiedot"
+                 }
+                ],
+                "actions":[
+                    {
+                        "@type":"HttpPOST",
+                        "body":"{'itemID':'@{triggerBody()?['ID']}','date':'Approve','feedback':'{{feedback.value}}'}}",
+                        "name":"Approve",
+                        "target":"",
+                        "headers":[
+                           {
+                              "Content-Type": "application/json",
+                              "name":"Authorization",
+                              "value":""
+                           }
+                        ]
+                    },
+                   {
+                      "@type":"HttpPOST",
+                      "body":"{'itemID':'@{triggerBody()?['ID']}','date':'{{date.value}}','feedback':'{{feedback.value}}'}",
+                      "name":"Lähetä uusi päivämäärä",
+                      "target":"",
+                      "headers":[
+                         {
+                            "Content-Type": "application/json",
+                            "name":"Authorization",
+                            "value":""
+                         }
+                      ]
+                   }
+                ]
+             }
+          ]
+       }
+    ]
+ }</script>

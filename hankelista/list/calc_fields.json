@@ -1,0 +1,2 @@
+=PVMERO(Aloituspäivä;TÄMÄ.PÄIVÄ();"d") //päivää kulunut
+=PVMERO(TÄMÄ.PÄIVÄ();[Arvioitu Valmistumispäivä];"d") //päivää jäljellä

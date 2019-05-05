@@ -1,0 +1,35 @@
+{
+    "$schema": "http://columnformatting.sharepointpnp.com/columnFormattingSchema.json",
+    "elmType": "div",
+    "style": {
+        "background-color": {
+            "operator": "?",
+            "operands": [
+               {
+                  "operator": "<",
+                  "operands": [
+                     "@currentField",
+                     5000
+                  ]
+               },
+               "#6ab65e",
+               "#39932c"
+            ]
+        }
+    },
+    "children": [
+      {
+        "elmType": "span",
+        "txtContent": "@currentField"
+      },
+      {
+        "elmType": "span",
+        "txtContent": "€",
+        "style": {
+          "display": "inline-block",
+          "padding": "0 1px"
+        }
+      }
+    ]
+  }
+

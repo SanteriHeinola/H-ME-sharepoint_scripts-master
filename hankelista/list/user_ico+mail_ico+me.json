@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+  "elmType": "div",
+  "attributes": {
+  },
+  "children": [
+    {
+      "elmType": "a",
+      "style": {
+        "padding-right": "8px"
+      },
+      "txtContent": "@currentField.title",
+      "attributes": {
+        "class": "=if(@me == @currentField.email, 'ms-fontColor-themePrimary ms-fontWeight-bold', 'ms-fontColor-themeSecondary')",
+        "href": "='@currentWeb' + '/_layouts/15/me.aspx/?p=' + @currentField.email",
+        "target": "_blank",
+        "title": "='@currentField.title' + 'Delve sen profiili sivu'"
+      }
+    },
+    {
+      "elmType": "div",
+      "style": {
+        "width": "32px",
+        "height": "32px",
+        "overflow": "hidden",
+        "border-radius": "50%",
+        "margin-right": "8px"
+      },
+      "children": [
+        {
+          "elmType": "img",
+          "attributes": {
+            "src": "='https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=' + '@currentField.email' + '&UA=0&size=HR64x64&sc=1538493608488'",
+            "title": "@currentField.title"
+          },
+          "style": {
+            "position": "relative",
+            "width": "100%",
+            "height": "100%"
+          }
+        }
+      ]
+    },
+    {
+      "elmType": "a",
+      "attributes": {
+        "iconName": "Mail",
+        "class": "sp-field-quickActions",
+        "href": "='mailto:' + @currentField.email + '?subject=Hankinta' + ' ' + '[$Title]' + '&body=Hei, kuinka hanke ' +'[$Hankkeen_x0020_nimi]'+ ' edistyy ? \n\n' + '@currentWeb' + '/Lists/Hankelista/DispForm.aspx?ID=' + '[$ID]'"
+      }
+    }
+  ]
+}

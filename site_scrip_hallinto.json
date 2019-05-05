@@ -1,0 +1,75 @@
+﻿$hallinto = @' 
+{  
+   "$schema":"schema.json",
+   "actions":[  
+      {  
+         "verb":"applyTheme",
+         "themeName":"hame green"
+      },
+	  {
+		 "verb": "setSiteLogo",
+		 "url": "/Jaetut%20asiakirjat/hublogo.png"
+	  },
+	  {
+		 "verb":"createSPList",
+		 "listName":"Hallinto",
+		 "templateType":100,
+		 "subactions":[  
+			{
+			 "verb":"SetDescription",
+			 "description":"Hallinnon yhteystiedot"
+			},
+			{  
+			 "verb":"addSPField",
+			 "fieldType":"Text",
+			 "displayName":"Jäsenen nimi",
+			 "addToDefaultView":true,
+			 "isRequired":true
+			},
+			{  
+			 "verb":"addSPField",
+			 "fieldType":"Text",
+			 "displayName":"Puhelinnumero",
+			 "addToDefaultView":true,
+			 "isRequired":false
+			},
+			{  
+			 "verb":"addSPField",
+			 "fieldType":"Text",
+			 "displayName":"Sähköposti",
+			 "addToDefaultView":true,
+			 "isRequired":true
+			},
+			{  
+			 "verb":"addSPField",
+			 "fieldType":"Text",
+			 "displayName":"Lähiosoite",
+			 "addToDefaultView":true,
+			 "isRequired":false
+			}
+			]
+		},
+		{
+		 "verb": "triggerFlow",
+		 "url": "",
+		 "name": "Laheta yammeriin ilmoitus uudesta sivusta",
+		 "parameters": {
+			 "event": "Microsoft Event",
+			 "product": "SharePoint"
+			}
+		},
+		{
+			"verb":"addNavLink",
+			"url":"/lists/Hallinto",
+			"displayName":"Hallinto",
+			"isWebRelative":true
+		},
+		{
+			"verb":"joinHubSite",
+			"hubSiteId":"524b7706-562f-4bb0-9482-450f7b850834"
+		}
+	],
+	"bindata":{},
+	"version":1
+}
+'@

@@ -1,0 +1,684 @@
+$script = @'
+{
+    "$schema":"schema.json",
+    "actions":[
+       {
+          "verb":"applyTheme",
+          "themeName":"Hame green"
+       },
+       {
+          "verb":"createSPList",
+          "listName":"hankelista",
+          "templateType":100,
+          "subactions":[
+             {
+                "verb":"SetDescription",
+                "description":"Kaupungin hankkeet"
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Text",
+                "displayName":"Hankkeen nimi",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Text",
+                "displayName":"Hankkeen kontakti",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"DateTime",
+                "displayName":"Aloituspäivä",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"User",
+                "displayName":"Projektipäällikkö",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Number",
+                "displayName":"Budjetti",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Note",
+                "displayName":"Lisätiedot",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"DateTime",
+                "displayName":"Arvioitu Valmistumispäivä",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"setSPFieldCustomFormatter",
+                "fieldDisplayName":"Hankkeen nimi",
+                "formatterJSON":{
+                  "$schema": "http://columnformatting.sharepointpnp.com/columnFormattingSchema.json",
+                  "elmType": "div",
+                  "style": {
+                    "position": "relative"
+                  },
+                  "children": [
+                    {
+                      "elmType": "div",
+                      "attributes": {
+                        "class": "sp-field-dataBars =if([$Arvioitu_x0020_Valmistumisp_x00e] <= @now, 'sp-field-severity--severeWarning', if(1 - Number([$Arvioitu_x0020_Valmistumisp_x00e] - @now) / Number([$Arvioitu_x0020_Valmistumisp_x00e] - [$Aloitusp_x00e4_iv_x00e4_]) >= 0.7, 'sp-field-severity--warning', 'sp-field-severity--good'))"
+                      },
+                      "style": {
+                        "min-height": "inherit",
+                        "background-color": "lightgreen",
+                        "width": "=if([$Arvioitu_x0020_Valmistumisp_x00e] <= @now, '100%', (1 - Number([$Arvioitu_x0020_Valmistumisp_x00e] - @now) / Number([$Arvioitu_x0020_Valmistumisp_x00e] - [$Aloitusp_x00e4_iv_x00e4_])) * 100 + '%')"
+                      }
+                    },
+                    {
+                      "elmType": "span",
+                      "txtContent": "@currentField",
+                      "style": {
+                        "position": "absolute",
+                        "left": "8px"
+                      },
+                      "attributes": {
+                        "class": "ms-fontColor-neutralSecondary"
+                      }
+                    }
+                  ]
+                }
+             },
+             {
+                "verb":"setSPFieldCustomFormatter",
+                "fieldDisplayName":"Hankkeen kontakti",
+                "formatterJSON":{
+                  "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+                  "elmType": "div",
+                  "children": [
+                    {
+                      "elmType": "span",
+                      "txtContent": "@currentField",
+                      "style": {
+                        "padding-right": "8px"
+                      }
+                    },
+                    {
+                      "elmType": "a",
+                      "attributes": {
+                        "iconName": "=if(@currentField.length > 10, 'Mail', '')",
+                        "href": "='mailto:' + @currentField + '?subject=Hankinta' + ' ' + '[$Title]' + '&body=Hei, kuinka hanke ' +'[$Hankkeen_x0020_nimi]'+ ' edistyy ? \n\n' +  '@currentWeb' + '/Lists/Hankelista/DispForm.aspx?ID=' + '[$ID]'"
+                      }
+                    }
+                  ]
+                }
+             },
+             {
+                "verb":"setSPFieldCustomFormatter",
+                "fieldDisplayName":"Aloituspäivä",
+                "formatterJSON":{
+                  "elmType": "div",
+                  "style": {
+                    "padding": "0 4px"
+                  },
+                  "attributes": {
+                    "class": {
+                      "operator": ":",
+                      "operands": [
+                        {
+                          "operator": "==",
+                          "operands": [
+                            "@currentField",
+                            ""
+                          ]
+                        },
+                        "",
+                        {
+                          "operator": ":",
+                          "operands": [
+                            {
+                              "operator": "<",
+                              "operands": [
+                                {
+                                  "operator": "Date()",
+                                  "operands": [
+                                    {
+                                      "operator": "toDateString()",
+                                      "operands": [
+                                        "@currentField"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "operator": "Date()",
+                                  "operands": [
+                                    {
+                                      "operator": "toDateString()",
+                                      "operands": [
+                                        "@now"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            "sp-css-backgroundColor-successBackground40",
+                            {
+                              "operator": ":",
+                              "operands": [
+                                {
+                                  "operator": "==",
+                                  "operands": [
+                                    {
+                                      "operator": "Date()",
+                                      "operands": [
+                                        {
+                                          "operator": "toDateString()",
+                                          "operands": [
+                                            "@currentField"
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "operator": "Date()",
+                                      "operands": [
+                                        {
+                                          "operator": "toDateString()",
+                                          "operands": [
+                                            "@now"
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "sp-css-backgroundColor-successBackground40",
+                                {
+                                  "operator": ":",
+                                  "operands": [
+                                    {
+                                      "operator": ">",
+                                      "operands": [
+                                        {
+                                          "operator": "Date()",
+                                          "operands": [
+                                            {
+                                              "operator": "toDateString()",
+                                              "operands": [
+                                                "@currentField"
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "operator": "Date()",
+                                          "operands": [
+                                            {
+                                              "operator": "toDateString()",
+                                              "operands": [
+                                                "@now"
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    "sp-css-backgroundColor-errorBackground30",
+                                    ""
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "txtContent": "@currentField"
+                }
+             },
+             {
+                "verb":"setSPFieldCustomFormatter",
+                "fieldDisplayName":"Projektipäällikkö",
+                "formatterJSON":{
+                  "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+                  "elmType": "div",
+                  "attributes": {
+                  },
+                  "children": [
+                    {
+                      "elmType": "a",
+                      "style": {
+                        "padding-right": "8px"
+                      },
+                      "txtContent": "@currentField.title",
+                      "attributes": {
+                        "class": "=if(@me == @currentField.email, 'ms-fontColor-themePrimary ms-fontWeight-bold', 'ms-fontColor-themeSecondary')",
+                        "href": "='@currentWeb' + '/_layouts/15/me.aspx/?p=' + @currentField.email",
+                        "target": "_blank",
+                        "title": "='@currentField.title' + 'Delve sen profiili sivu'"
+                      }
+                    },
+                    {
+                      "elmType": "div",
+                      "style": {
+                        "width": "32px",
+                        "height": "32px",
+                        "overflow": "hidden",
+                        "border-radius": "50%",
+                        "margin-right": "8px"
+                      },
+                      "children": [
+                        {
+                          "elmType": "img",
+                          "attributes": {
+                            "src": "='https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=' + '@currentField.email' + '&UA=0&size=HR64x64&sc=1538493608488'",
+                            "title": "@currentField.title"
+                          },
+                          "style": {
+                            "position": "relative",
+                            "width": "100%",
+                            "height": "100%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "elmType": "a",
+                      "attributes": {
+                        "iconName": "Mail",
+                        "class": "sp-field-quickActions",
+                        "href": "='mailto:' + @currentField.email + '?subject=Hankinta' + ' ' + '[$Title]' + '&body=Hei, kuinka hanke ' +'[$Hankkeen_x0020_nimi]'+ ' edistyy ? \n\n' + '@currentWeb' + '/Lists/Hankelista/DispForm.aspx?ID=' + '[$ID]'"
+                      }
+                    }
+                  ]
+                }
+             },
+             {
+                "verb":"setSPFieldCustomFormatter",
+                "fieldDisplayName":"Budjetti",
+                "formatterJSON":{
+                  "$schema":"http://columnformatting.sharepointpnp.com/columnFormattingSchema.json",
+                  "elmType":"div",
+                  "children":[
+                     {
+                        "elmType":"span",
+                        "txtContent":"@currentField"
+                     },
+                     {
+                        "elmType":"span",
+                        "txtContent":"€",
+                        "style":{
+                           "display":"inline-block",
+                           "padding":"0 1px"
+                        }
+                     }
+                  ]
+               }
+             }
+          ]
+       },
+       {
+          "verb":"createSPList",
+          "listName":"valmiithankkeet",
+          "templateType":100,
+          "subactions":[
+             {
+                "verb":"SetDescription",
+                "description":"Valmiit hankkeet"
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Text",
+                "displayName":"Hankkeen nimi",
+                "addToDefaultView":true,
+                "isRequired":true
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Text",
+                "displayName":"Hankkeen kontakti",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+               "verb":"addSPField",
+               "fieldType":"DateTime",
+               "displayName":"Aloituspäivä",
+               "addToDefaultView":true,
+               "isRequired":false
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"User",
+                "displayName":"Projektipäällikkö",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Number",
+                "displayName":"Budjetti",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"Note",
+                "displayName":"Lisätiedot",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"DateTime",
+                "displayName":"Arvioitu Valmistumispäivä",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+                "verb":"addSPField",
+                "fieldType":"DateTime",
+                "displayName":"Valmistumispäivä",
+                "addToDefaultView":true,
+                "isRequired":false
+             },
+             {
+               "verb":"setSPFieldCustomFormatter",
+               "fieldDisplayName":"Hankkeen nimi",
+               "formatterJSON":{
+                 "$schema": "http://columnformatting.sharepointpnp.com/columnFormattingSchema.json",
+                 "elmType": "div",
+                 "style": {
+                   "position": "relative"
+                 },
+                 "children": [
+                   {
+                     "elmType": "div",
+                     "attributes": {
+                       "class": "sp-field-dataBars =if([$Arvioitu_x0020_Valmistumisp_x00e] <= @now, 'sp-field-severity--severeWarning', if(1 - Number([$Arvioitu_x0020_Valmistumisp_x00e] - @now) / Number([$Arvioitu_x0020_Valmistumisp_x00e] - [$Aloitusp_x00e4_iv_x00e4_]) >= 0.7, 'sp-field-severity--warning', 'sp-field-severity--good'))"
+                     },
+                     "style": {
+                       "min-height": "inherit",
+                       "background-color": "lightgreen",
+                       "width": "=if([$Arvioitu_x0020_Valmistumisp_x00e] <= @now, '100%', (1 - Number([$Arvioitu_x0020_Valmistumisp_x00e] - @now) / Number([$Arvioitu_x0020_Valmistumisp_x00e] - [$Aloitusp_x00e4_iv_x00e4_])) * 100 + '%')"
+                     }
+                   },
+                   {
+                     "elmType": "span",
+                     "txtContent": "@currentField",
+                     "style": {
+                       "position": "absolute",
+                       "left": "8px"
+                     },
+                     "attributes": {
+                       "class": "ms-fontColor-neutralSecondary"
+                     }
+                   }
+                 ]
+               }
+            },
+            {
+               "verb":"setSPFieldCustomFormatter",
+               "fieldDisplayName":"Hankkeen kontakti",
+               "formatterJSON":{
+                 "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+                 "elmType": "div",
+                 "children": [
+                   {
+                     "elmType": "span",
+                     "txtContent": "@currentField",
+                     "style": {
+                       "padding-right": "8px"
+                     }
+                   },
+                   {
+                     "elmType": "a",
+                     "attributes": {
+                       "iconName": "=if(@currentField.length > 10, 'Mail', '')",
+                       "href": "='mailto:' + @currentField + '?subject=Hankinta' + ' ' + '[$Title]' + '&body=Hei, kuinka hanke ' +'[$Hankkeen_x0020_nimi]'+ ' edistyy ? \n\n' +  '@currentWeb' + '/Lists/Hankelista/DispForm.aspx?ID=' + '[$ID]'"
+                     }
+                   }
+                 ]
+               }
+            },
+            {
+               "verb":"setSPFieldCustomFormatter",
+               "fieldDisplayName":"Aloituspäivä",
+               "formatterJSON":{
+                 "elmType": "div",
+                 "style": {
+                   "padding": "0 4px"
+                 },
+                 "attributes": {
+                   "class": {
+                     "operator": ":",
+                     "operands": [
+                       {
+                         "operator": "==",
+                         "operands": [
+                           "@currentField",
+                           ""
+                         ]
+                       },
+                       "",
+                       {
+                         "operator": ":",
+                         "operands": [
+                           {
+                             "operator": "<",
+                             "operands": [
+                               {
+                                 "operator": "Date()",
+                                 "operands": [
+                                   {
+                                     "operator": "toDateString()",
+                                     "operands": [
+                                       "@currentField"
+                                     ]
+                                   }
+                                 ]
+                               },
+                               {
+                                 "operator": "Date()",
+                                 "operands": [
+                                   {
+                                     "operator": "toDateString()",
+                                     "operands": [
+                                       "@now"
+                                     ]
+                                   }
+                                 ]
+                               }
+                             ]
+                           },
+                           "sp-css-backgroundColor-successBackground40",
+                           {
+                             "operator": ":",
+                             "operands": [
+                               {
+                                 "operator": "==",
+                                 "operands": [
+                                   {
+                                     "operator": "Date()",
+                                     "operands": [
+                                       {
+                                         "operator": "toDateString()",
+                                         "operands": [
+                                           "@currentField"
+                                         ]
+                                       }
+                                     ]
+                                   },
+                                   {
+                                     "operator": "Date()",
+                                     "operands": [
+                                       {
+                                         "operator": "toDateString()",
+                                         "operands": [
+                                           "@now"
+                                         ]
+                                       }
+                                     ]
+                                   }
+                                 ]
+                               },
+                               "sp-css-backgroundColor-successBackground40",
+                               {
+                                 "operator": ":",
+                                 "operands": [
+                                   {
+                                     "operator": ">",
+                                     "operands": [
+                                       {
+                                         "operator": "Date()",
+                                         "operands": [
+                                           {
+                                             "operator": "toDateString()",
+                                             "operands": [
+                                               "@currentField"
+                                             ]
+                                           }
+                                         ]
+                                       },
+                                       {
+                                         "operator": "Date()",
+                                         "operands": [
+                                           {
+                                             "operator": "toDateString()",
+                                             "operands": [
+                                               "@now"
+                                             ]
+                                           }
+                                         ]
+                                       }
+                                     ]
+                                   },
+                                   "sp-css-backgroundColor-errorBackground30",
+                                   ""
+                                 ]
+                               }
+                             ]
+                           }
+                         ]
+                       }
+                     ]
+                   }
+                 },
+                 "txtContent": "@currentField"
+               }
+            },
+            {
+               "verb":"setSPFieldCustomFormatter",
+               "fieldDisplayName":"Projektipäällikkö",
+               "formatterJSON":{
+                 "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+                 "elmType": "div",
+                 "attributes": {
+                 },
+                 "children": [
+                   {
+                     "elmType": "a",
+                     "style": {
+                       "padding-right": "8px"
+                     },
+                     "txtContent": "@currentField.title",
+                     "attributes": {
+                       "class": "=if(@me == @currentField.email, 'ms-fontColor-themePrimary ms-fontWeight-bold', 'ms-fontColor-themeSecondary')",
+                       "href": "='@currentWeb' + '/_layouts/15/me.aspx/?p=' + @currentField.email",
+                       "target": "_blank",
+                       "title": "='@currentField.title' + 'Delve sen profiili sivu'"
+                     }
+                   },
+                   {
+                     "elmType": "div",
+                     "style": {
+                       "width": "32px",
+                       "height": "32px",
+                       "overflow": "hidden",
+                       "border-radius": "50%",
+                       "margin-right": "8px"
+                     },
+                     "children": [
+                       {
+                         "elmType": "img",
+                         "attributes": {
+                           "src": "='https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=' + '@currentField.email' + '&UA=0&size=HR64x64&sc=1538493608488'",
+                           "title": "@currentField.title"
+                         },
+                         "style": {
+                           "position": "relative",
+                           "width": "100%",
+                           "height": "100%"
+                         }
+                       }
+                     ]
+                   },
+                   {
+                     "elmType": "a",
+                     "attributes": {
+                       "iconName": "Mail",
+                       "class": "sp-field-quickActions",
+                       "href": "='mailto:' + @currentField.email + '?subject=Hankinta' + ' ' + '[$Title]' + '&body=Hei, kuinka hanke ' +'[$Hankkeen_x0020_nimi]'+ ' edistyy ? \n\n' + '@currentWeb' + '/Lists/Hankelista/DispForm.aspx?ID=' + '[$ID]'"
+                     }
+                   }
+                 ]
+               }
+            },
+            {
+               "verb":"setSPFieldCustomFormatter",
+               "fieldDisplayName":"Budjetti",
+               "formatterJSON":{
+                 "$schema":"http://columnformatting.sharepointpnp.com/columnFormattingSchema.json",
+                 "elmType":"div",
+                 "children":[
+                    {
+                       "elmType":"span",
+                       "txtContent":"@currentField"
+                    },
+                    {
+                       "elmType":"span",
+                       "txtContent":"€",
+                       "style":{
+                          "display":"inline-block",
+                          "padding":"0 1px"
+                       }
+                    }
+                 ]
+              }
+            }
+          ]
+       },
+       {
+          "verb":"addNavLink",
+          "url":"/lists/hankelista",
+          "displayName":"Hankelista",
+          "isWebRelative":true
+       },
+       {
+          "verb":"addNavLink",
+          "url":"/lists/valmiithankkeet",
+          "displayName":"Valmiit hankkeet",
+          "isWebRelative":true
+       },
+       {
+          "verb":"joinHubSite",
+          "hubSiteId":"524b7706-562f-4bb0-9482-450f7b850834"
+       }
+    ],
+    "bindata":{ },
+    "version":1
+}
+'@

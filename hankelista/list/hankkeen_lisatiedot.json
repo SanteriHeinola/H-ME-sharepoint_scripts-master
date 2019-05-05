@@ -1,0 +1,43 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+    "elmType": "div",
+    "style": {
+    },
+    "children": [
+        {
+        "elmType": "span",
+            "txtContent": "@currentField",
+            "style": {
+                "white-space": "normal",
+                "padding": "20px 0",
+                "resize": "both",
+                "overflow": "auto"
+            }
+        },
+        {
+        "elmType": "a",
+            "txtContent": "Expand",
+            "attributes": {
+                "href": "=if(@currentField.length > 100, '@currentField = 0', '')"
+            },
+            "style": {
+                "position": "absolute",
+                "top": 0
+            }
+        }
+    ]
+}
+  
+
+"href": "='mailto:' + @currentField + '?subject=Hankinta' + ' ' + '
+
+
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+    "elmType": "div",
+    "txtContent": "@currentField",
+    "style": {
+      "white-space": "normal",
+      "padding": "11px 0"
+    }
+  }

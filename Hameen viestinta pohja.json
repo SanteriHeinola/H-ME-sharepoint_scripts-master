@@ -1,0 +1,15 @@
+ {
+                 "$schema":"schema.json",
+                 "actions":[
+                    {
+                       "verb":"applyTheme",
+                       "themeName":"Hame green"
+                    },
+                  {
+                        "verb":"joinHubSite",
+                        "hubSiteId":"524b7706-562f-4bb0-9482-450f7b850834"
+                    }
+                ],
+                "bindata":{},
+                "version":1
+              }

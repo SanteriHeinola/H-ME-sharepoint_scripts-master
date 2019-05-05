@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
+  "elmType": "div",
+  "children": [
+    {
+      "elmType": "span",
+      "txtContent": "@currentField",
+      "style": {
+        "padding-right": "8px"
+      }
+    },
+    {
+      "elmType": "a",
+      "attributes": {
+        "iconName": "=if(@currentField.length > 10, 'Mail', '')",
+        "href": "='mailto:' + @currentField + '?subject=Hankinta' + ' ' + '[$Title]' + '&body=Hei, kuinka hanke ' +'[$Hankkeen_x0020_nimi]'+ ' edistyy ? \n\n' +  '@currentWeb' + '/Lists/Hankelista/DispForm.aspx?ID=' + '[$ID]'"
+      }
+    }
+  ]
+}

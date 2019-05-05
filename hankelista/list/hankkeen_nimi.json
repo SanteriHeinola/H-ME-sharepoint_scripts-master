@@ -1,0 +1,31 @@
+{
+    "$schema": "http://columnformatting.sharepointpnp.com/columnFormattingSchema.json",
+    "elmType": "div",
+    "style": {
+      "position": "relative"
+    },
+    "children": [
+      {
+        "elmType": "div",
+        "attributes": {
+          "class": "sp-field-dataBars =if([$Arvioitu_x0020_Valmistumisp_x00e] <= @now, 'sp-field-severity--severeWarning', if(1 - Number([$Arvioitu_x0020_Valmistumisp_x00e] - @now) / Number([$Arvioitu_x0020_Valmistumisp_x00e] - [$Aloitusp_x00e4_iv_x00e4_]) >= 0.7, 'sp-field-severity--warning', 'sp-field-severity--good'))"
+        },
+        "style": {
+          "min-height": "inherit",
+          "background-color": "lightgreen",
+          "width": "=if([$Arvioitu_x0020_Valmistumisp_x00e] <= @now, '100%', (1 - Number([$Arvioitu_x0020_Valmistumisp_x00e] - @now) / Number([$Arvioitu_x0020_Valmistumisp_x00e] - [$Aloitusp_x00e4_iv_x00e4_])) * 100 + '%')"
+        }
+      },
+      {
+        "elmType": "span",
+        "txtContent": "@currentField",
+        "style": {
+          "position": "absolute",
+          "left": "8px"
+        },
+        "attributes": {
+          "class": "ms-fontColor-neutralSecondary"
+        }
+      }
+    ]
+  }
